@@ -9,10 +9,14 @@
     <h2>Tambah Artikel Baru</h2>
     <div class="card p-4 mt-3">
         <?= validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-        <form action="<?= base_url('admin/tambah') ?>" method="post">
+        <form action="<?= base_url('admin/tambah') ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Judul Artikel</label>
                 <input type="text" name="judul" class="form-control" placeholder="Masukkan judul...">
+            </div>
+            <div class="form-group">
+                <label>Gambar</label>
+                <input type="file" name="gambar" class="form-control">
             </div>
             <div class="form-group">
                 <label>Konten</label>

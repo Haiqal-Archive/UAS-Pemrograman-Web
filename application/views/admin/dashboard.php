@@ -15,6 +15,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>Judul</th>
+                <th>Gambar</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
             </tr>
@@ -23,6 +24,13 @@
             <?php foreach($artikel as $a): ?>
             <tr>
                 <td><?= $a['judul'] ?></td>
+                <td>
+                    <?php if($a['gambar'] && $a['gambar'] !== 'default.jpg'): ?>
+                        <img src="<?= base_url('uploads/artikel/'.$a['gambar']) ?>" width="80">
+                    <?php else: ?>
+                        <span class="text-muted">No Image</span>
+                    <?php endif; ?>
+                </td>
                 <td><?= $a['tanggal_dibuat'] ?></td>
                 <td>
                     <a href="<?= base_url('admin/edit/'.$a['id']) ?>" class="btn btn-sm btn-warning">Edit</a>

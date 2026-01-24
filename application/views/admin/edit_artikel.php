@@ -9,10 +9,17 @@
     <h2>Edit Artikel</h2>
     <div class="card p-4 mt-3">
         <?= validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-        <form action="<?= base_url('admin/edit/'.$artikel['id']) ?>" method="post">
+        <form action="<?= base_url('admin/edit/'.$artikel['id']) ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Judul Artikel</label>
                 <input type="text" name="judul" class="form-control" value="<?= $artikel['judul'] ?>">
+            </div>
+            <div class="form-group">
+                <label>Gambar</label>
+                <input type="file" name="gambar" class="form-control">
+                <?php if($artikel['gambar']): ?>
+                    <small>Gambar saat ini: <img src="<?= base_url('uploads/artikel/'.$artikel['gambar']) ?>" width="100"></small>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <label>Konten</label>

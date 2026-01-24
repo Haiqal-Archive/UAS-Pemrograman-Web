@@ -24,10 +24,14 @@ class Admin extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('admin/tambah_artikel');
         } else {
+            $gambar = $this->_upload_gambar();
+            
             $data = [
                 'judul' => $this->input->post('judul'),
                 'slug'  => url_title($this->input->post('judul'), 'dash', TRUE),
-                'konten'=> $this->input->post('konten')
+                'konten'=> $this->input->post('konten'),
+                'gambar' => $gambar,
+                'tanggal_dibuat' => date('Y-m-d H:i:s')
             ];
             $this->Artikel_model->simpan($data);
             redirect('admin');
@@ -46,11 +50,41 @@ class Admin extends CI_Controller {
         } else {
             $update_data = [
                 'judul' => $this->input->post('judul'),
-                'konten'=> $this->input->post('konten')
+                'konten'=> $this->input->post('konten'),
+                'tanggal_dibuat' => date('Y-m-d H:i:s')
             ];
+
+            if (!empty($_FILES['gambar']['name'])) {
+                $gambar = $this->_upload_gambar();
+                if ($gambar) {
+                    $update_data['gambar'] = $gambar;
+                }
+            }
+
             $this->Artikel_model->update($id, $update_data);
             redirect('admin');
         }
+    }
+
+    private function _upload_gambar()
+    {
+        $path = './uploads/artikel/';
+        if (!is_dir($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        $config['upload_path']          = $path;
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
+        $config['max_size']             = 2048; // 2MB
+        $config['encrypt_name']         = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('gambar')) {
+            return $this->upload->data("file_name");
+        }
+        
+        return NULL;
     }
 
     public function hapus($id) {
