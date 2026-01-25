@@ -1,4 +1,5 @@
 # RustHub Docs Portal 🦀
+
 **Proyek UAS Pemrograman Web**
 
 **RustHub Docs** adalah portal dokumentasi berbasis komunitas yang dibangun menggunakan **CodeIgniter 3**.
@@ -8,7 +9,7 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 
 ---
 
-## 🚀 Fitur Unggulan
+## Fitur
 
 ### 1. Developer-Centric Frontend
 - **Tema Gelap (Rust/VSCode Style):** Desain UI menggunakan palet warna `Charcoal` & `Rust Orange` agar nyaman dibaca developer.
@@ -31,7 +32,7 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 
 ---
 
-## 🛠️ Stack Teknologi
+## Stack Teknologi
 
 - **Backend:** PHP 8.0 + CodeIgniter 3 (HMVC structure ready)
 - **Frontend:** Bootstrap 5 + Custom CSS (Rust Theme) + Prism.js
@@ -41,7 +42,7 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 
 ---
 
-## 📂 Struktur Database
+## Struktur Database
 
 - `users` : Menyimpan data kontributor/admin.
 - `artikel` : Menyimpan konten dokumentasi (Judul, Slug, Konten, Gambar).
@@ -49,13 +50,13 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 
 ---
 
-## 💻 Cara Menjalankan (3 Langkah Mudah)
+## Cara Menjalankan (3 Langkah Mudah)
 
 ### 1. Siapkan Proyek
-Pastikan Docker Desktop sudah menyala.
+Pastikan Docker Engine/Desktop sudah menyala.
 ```bash
-git clone https://github.com/haiqal/RustHub-Docs.git
-cd RustHub-Docs
+git clone https://github.com/Haiqal-Archive/UAS-Pemrograman-Web.git
+cd UAS-Pemrograman-Web
 docker compose up -d --build
 ```
 
@@ -76,7 +77,7 @@ curl "http://localhost:8080/index.php/migrate"
 
 ---
 
-## 📝 Catatan Penting
+## Catatan Penting (Troubleshooting)
 - **Upload Permission:** Jika upload gambar gagal di Linux/Mac, jalankan:
   ```bash
   docker exec -u 0 ci3_web chown -R www-data:www-data /var/www/html/uploads/artikel
@@ -84,6 +85,7 @@ curl "http://localhost:8080/index.php/migrate"
 - **Port Conflict:** Jika port 8080 terpakai, ubah di `docker-compose.yml`.
 
 ---
-**Nama Mahasiswa:** Haiqal Alyhazamy
-**NIM:** 2410050
-**Mata Kuliah:** Pemrograman Web
+**Nama Mahasiswa:** Haiqal Alyhazamy<br>
+**NIM:** 2410050<br>
+**Mata Kuliah:** Pemrograman Web<br>
+**Prodi:** TI Semester 3

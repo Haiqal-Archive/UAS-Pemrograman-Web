@@ -33,8 +33,8 @@
 
             <div class="card p-4 shadow-sm" style="background-color: #1f2428; border: none;">
                 <!-- Main Content with styling for Code blocks -->
-                <article class="article-content">
-                    <?= nl2br($artikel['konten']) ?> 
+                <article class="article-content" style="color: #e1e4e8;">
+                    <?= $artikel['konten'] ?> 
                 </article>
             </div>
 
