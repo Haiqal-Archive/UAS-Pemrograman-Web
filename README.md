@@ -1,93 +1,89 @@
-# Proyek UAS Pemrograman Web - CMS CodeIgniter 3
+# RustHub Docs Portal 🦀
+**Proyek UAS Pemrograman Web**
 
-Proyek ini adalah tugas Ujian Akhir Semester (UAS) untuk mata kuliah Pemrograman Web. Aplikasi ini adalah Content Management System (CMS) sederhana berbasis CodeIgniter 3 yang dijalankan menggunakan Docker.
+**RustHub Docs** adalah portal dokumentasi berbasis komunitas yang dibangun menggunakan **CodeIgniter 3**.
+Berbeda dengan blog konvensional, proyek ini dirancang dengan tema gelap yang ramah bagi developer, lengkap dengan *syntax highlighting*, struktur sidebar dokumentasi, dan integrasi tipografi ala "Code Editor".
 
-## Fitur Utama
-1. **Otentikasi User:** Login admin dengan session database yang aman.
-2. **Manajemen Artikel (CRUD):** Tambah, Edit, Hapus artikel.
-3. **Upload Gambar:** Fitur upload gambar pada artikel dengan keamanan file.
-4. **Database Migrations:** Setup database otomatis tanpa perlu import SQL manual.
-5. **Dockerized:** Lingkungan pengembangan terisolasi dan konsisten.
-
-## Prasyarat
-Satu-satunya yang Anda butuhkan adalah:
-- **Docker Desktop** (atau Docker Engine + Docker Compose di Linux)
-
-Tidak perlu menginstall XAMPP, PHP, atau MySQL secara manual.
+Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrograman Web.
 
 ---
 
-## Cara Menjalankan (Langkah demi Langkah)
+## 🚀 Fitur Unggulan
 
-Ikuti langkah ini untuk menjalankan aplikasi:
+### 1. Developer-Centric Frontend
+- **Tema Gelap (Rust/VSCode Style):** Desain UI menggunakan palet warna `Charcoal` & `Rust Orange` agar nyaman dibaca developer.
+- **Syntax Highlighting:** Integrasi **Prism.js** untuk mempercantik kode snippet pada artikel.
+- **Font Coding:** Menggunakan font `Fira Code` untuk memberikan nuansa "IDE" di web.
 
-### 1. Build dan Jalankan Container
-Buka terminal di root folder proyek, lalu jalankan:
+### 2. Autentikasi & Keamanan
+- Login Admin dengan *Bcrypt Hashing*.
+- Proteksi folder upload (Block PHP execution via `.htaccess`).
+- Isolasi Database Session.
+
+### 3. CMS / Admin Panel
+- **Manajemen Modul (Artikel):** CRUD full untuk menambah dokumentasi atau tutorial baru.
+- **Upload Gambar:** Menyertakan diagram atau screenshot pada dokumentasi.
+- **Dashboard Overview:** Ringkasan konten yang tersedia.
+
+### 4. Database & Migrations
+- Tidak perlu import SQL manual. Cukup jalankan perintah migrasi.
+- Struktur tabel otomatis dibuat saat migrasi pertama kali.
+
+---
+
+## 🛠️ Stack Teknologi
+
+- **Backend:** PHP 8.0 + CodeIgniter 3 (HMVC structure ready)
+- **Frontend:** Bootstrap 5 + Custom CSS (Rust Theme) + Prism.js
+- **Database:** MariaDB 10.6
+- **Infrastructure:** Docker & Docker Compose
+- **Scripting:** Bash scripts untuk utility check.
+
+---
+
+## 📂 Struktur Database
+
+- `users` : Menyimpan data kontributor/admin.
+- `artikel` : Menyimpan konten dokumentasi (Judul, Slug, Konten, Gambar).
+- `ci_sessions` : Session storage berbasis database untuk keamanan ekstra.
+
+---
+
+## 💻 Cara Menjalankan (3 Langkah Mudah)
+
+### 1. Siapkan Proyek
+Pastikan Docker Desktop sudah menyala.
 ```bash
+git clone https://github.com/haiqal/RustHub-Docs.git
+cd RustHub-Docs
 docker compose up -d --build
 ```
-Tunggu hingga proses selesai.
 
-### 2. Setup Database & Migrasi (Wajib)
-Database awal masih kosong. Jalankan perintah ini untuk membuat tabel (user, artikel, sessions) dan mengisi data awal (seeding):
+### 2. Inisiasi Database
+Jalankan perintah ini **sekali saja** untuk setup tabel dan data admin awal:
 ```bash
 curl "http://localhost:8080/index.php/migrate"
 ```
-*Jika sukses, akan muncul pesan: `Migration executed successfully!`*
+*Tunggu hingga muncul pesan sukses.*
 
-### 3. Setup Permissions Upload Gambar (Jika Diperlukan)
-Aplikasi akan mencoba membuat folder upload secara otomatis. Namun, jika terjadi error "Permission Denied", jalankan perintah ini agar container memiliki akses menulis:
-```bash
-docker exec -u 0 ci3_web chown -R www-data:www-data /var/www/html/uploads/artikel
-```
+### 3. Akses
+- **Portal Publik:** [http://localhost:8080/](http://localhost:8080/)
+- **Admin Login:** [http://localhost:8080/login](http://localhost:8080/login)
 
-### 4. Akses Aplikasi
-Buka browser dan kunjungi:
-**[http://localhost:8080/](http://localhost:8080/)**
+**Default Credential:**
+- Email: `admin@example.com`
+- Password: `admin123`
 
 ---
 
-## Akun Login (Admin)
-Gunakan kredensial berikut untuk masuk ke dashboard:
-- **Email:** `admin@example.com`
-- **Password:** `admin123`
-
----
-
-## Perintah Berguna Lainnya
-
-### Melihat Isi Database via Terminal
-Anda bisa melihat isi tabel langsung tanpa tool gui menggunakan script yang disediakan:
-```bash
-# Lihat daftar user
-./scripts/get_users.sh
-
-# Lihat daftar artikel
-./scripts/get_artikel.sh
-```
-
-### Mematikan Aplikasi
-```bash
-# Hentikan aplikasi
-docker compose down
-
-# Hentikan aplikasi & HAPUS database (Reset Ulang)
-docker compose down -v
-```
-*Catatan: Jika Anda menjalankan `docker compose down -v`, database akan kembali bersih. Anda perlu menjalankan langkah Migrasi lagi saat menyalakannya kembali.*
-
----
-
-## Masalah Umum (Troubleshooting)
-1. **Error "Database Error occurred" saat buka web?**
-   - Pastikan Anda sudah menjalankan langkah nomor **2 (Migrasi)**.
-
-2. **Gambar tidak bisa diupload?**
-   - Pastikan Anda sudah menjalankan langkah nomor **3 (Permissions)**.
-
-3. **Port already in use?**
-   - Jika port 8080 atau 3306 bentrok, ubah mapping port di file `docker-compose.yml`.
+## 📝 Catatan Penting
+- **Upload Permission:** Jika upload gambar gagal di Linux/Mac, jalankan:
+  ```bash
+  docker exec -u 0 ci3_web chown -R www-data:www-data /var/www/html/uploads/artikel
+  ```
+- **Port Conflict:** Jika port 8080 terpakai, ubah di `docker-compose.yml`.
 
 ---
 **Nama Mahasiswa:** Haiqal Alyhazamy
 **NIM:** 2410050
+**Mata Kuliah:** Pemrograman Web

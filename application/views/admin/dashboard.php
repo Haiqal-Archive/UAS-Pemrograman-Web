@@ -8,7 +8,11 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Daftar Artikel</h2>
-        <a href="<?= base_url('admin/tambah') ?>" class="btn btn-primary">Tambah Artikel Baru</a>
+        <div>
+            <a href="<?= base_url() ?>" class="btn btn-outline-secondary mr-2">&larr; Public Home</a>
+            <a href="<?= base_url('admin/tambah') ?>" class="btn btn-primary">Tambah Artikel Baru</a>
+            <a href="<?= base_url('login/logout') ?>" class="btn btn-danger ml-2">Logout</a>
+        </div>
     </div>
     
     <table class="table table-bordered bg-white">
