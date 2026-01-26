@@ -1,11 +1,11 @@
 #!/bin/zsh
 set -euo pipefail
 
-DB_CONTAINER=${DB_CONTAINER:-ci3_db}
-DB_NAME=${DB_NAME:-cms_db}
+DB_CONTAINER=${DB_CONTAINER:-rusthub_db}
+DB_NAME=${DB_NAME:-rusthub_db}
 DB_USER=${DB_USER:-root}
 DB_PASS=${DB_PASS:-root}
-DEFAULT_QUERY="SELECT id, nama, username, role, created_at FROM user;"
+DEFAULT_QUERY="SELECT id, nama, username, role, created_at FROM users;"
 QUERY=${1:-$DEFAULT_QUERY}
 
 if docker ps --format '{{.Names}}' | grep -q "^${DB_CONTAINER}$"; then

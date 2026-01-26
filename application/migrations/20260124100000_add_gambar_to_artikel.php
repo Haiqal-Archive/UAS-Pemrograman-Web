@@ -14,11 +14,11 @@ class Migration_Add_gambar_to_artikel extends CI_Migration {
                 'after' => 'konten'
             ),
         );
-        $this->dbforge->add_column('artikel', $fields);
+        $this->dbforge->add_column('articles', $fields);
     }
 
     public function down()
     {
-        $this->dbforge->drop_column('artikel', 'gambar');
+        $this->dbforge->drop_column('articles', 'gambar');
     }
 }

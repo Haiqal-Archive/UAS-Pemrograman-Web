@@ -68,7 +68,7 @@ class Admin extends CI_Controller {
 
     private function _upload_image()
     {
-        $path = './uploads/artikel/';
+        $path = './uploads/articles/';
         if (!is_dir($path)) {
             mkdir($path, 0755, true);
         }

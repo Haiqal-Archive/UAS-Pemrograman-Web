@@ -31,7 +31,7 @@ class Migration_Create_artikel_table extends CI_Migration {
             ),
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('artikel');
+        $this->dbforge->create_table('articles');
 
         // Seed data: Rust Docs Style
         $data = array(
@@ -54,11 +54,11 @@ class Migration_Create_artikel_table extends CI_Migration {
                 'tanggal_dibuat' => date('Y-m-d H:i:s')
             )
         );
-        $this->db->insert_batch('artikel', $data);
+        $this->db->insert_batch('articles', $data);
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('artikel', TRUE);
+        $this->dbforge->drop_table('articles', TRUE);
     }
 }

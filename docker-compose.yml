@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    container_name: ci3_web
+    container_name: rusthub_web
     ports:
       - "8080:80"
     volumes:
@@ -13,16 +13,16 @@ services:
       - DB_HOST=db
       - DB_USER=root
       - DB_PASS=root
-      - DB_NAME=cms_db
+      - DB_NAME=rusthub_db
     depends_on:
       - db
 
   db:
     image: mariadb:10.6
-    container_name: ci3_db
+    container_name: rusthub_db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: cms_db
+      MYSQL_DATABASE: rusthub_db
     volumes:
       - db_data:/var/lib/mysql
     ports:

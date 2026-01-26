@@ -1,1 +1,1 @@
-docker exec -it ci3_db mysql -uroot -proot -D cms_db -e "SELECT * FROM artikel;"
+docker exec -it rusthub_db mysql -uroot -proot -D rusthub_db -e "SELECT * FROM articles;"
