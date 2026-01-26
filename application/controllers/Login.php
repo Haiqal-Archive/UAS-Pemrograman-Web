@@ -19,7 +19,7 @@ class Login extends CI_Controller {
         $this->load->view('login', $data);
     }
 
-    public function cek()
+    public function verify()
     {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
@@ -46,7 +46,7 @@ class Login extends CI_Controller {
             return redirect('admin');
         }
 
-        $this->session->set_flashdata('error', 'Email atau password salah.');
+        $this->session->set_flashdata('error', 'Invalid email or password.');
         return redirect('login');
     }
 

@@ -10,54 +10,54 @@ class Admin extends CI_Controller {
 
     public function index() {
         if ($this->session->userdata('is_login')) {
-            $data['artikel'] = $this->Artikel_model->get_semua();
+            $data['articles'] = $this->Artikel_model->get_all();
             $this->load->view('admin/dashboard', $data);
         } else {
             redirect('login','refresh');
         }
     }
 
-    public function tambah() {
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
-        $this->form_validation->set_rules('konten', 'Konten', 'required');
+    public function create() {
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('content', 'Content', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('admin/tambah_artikel');
+            $this->load->view('admin/create_article');
         } else {
-            $gambar = $this->_upload_gambar();
+            $image = $this->_upload_image();
             
             $data = [
-                'judul' => $this->input->post('judul'),
-                'slug'  => url_title($this->input->post('judul'), 'dash', TRUE),
-                'konten'=> $this->input->post('konten'),
-                'gambar' => $gambar,
+                'judul' => $this->input->post('title'),
+                'slug'  => url_title($this->input->post('title'), 'dash', TRUE),
+                'konten'=> $this->input->post('content'),
+                'gambar' => $image,
                 'tanggal_dibuat' => date('Y-m-d H:i:s')
             ];
-            $this->Artikel_model->simpan($data);
+            $this->Artikel_model->insert($data);
             redirect('admin');
         }
     }
 
     public function edit($id) {
-        $data['artikel'] = $this->Artikel_model->get_by_id($id);
+        $data['article'] = $this->Artikel_model->get_by_id($id);
         
-        if (empty($data['artikel'])) show_404();
+        if (empty($data['article'])) show_404();
 
-        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
         
         if ($this->form_validation->run() === FALSE) {
-            $this->load->view('admin/edit_artikel', $data);
+            $this->load->view('admin/edit_article', $data);
         } else {
             $update_data = [
-                'judul' => $this->input->post('judul'),
-                'konten'=> $this->input->post('konten'),
+                'judul' => $this->input->post('title'),
+                'konten'=> $this->input->post('content'),
                 'tanggal_dibuat' => date('Y-m-d H:i:s')
             ];
 
-            if (!empty($_FILES['gambar']['name'])) {
-                $gambar = $this->_upload_gambar();
-                if ($gambar) {
-                    $update_data['gambar'] = $gambar;
+            if (!empty($_FILES['image']['name'])) {
+                $image = $this->_upload_image();
+                if ($image) {
+                    $update_data['gambar'] = $image;
                 }
             }
 
@@ -66,7 +66,7 @@ class Admin extends CI_Controller {
         }
     }
 
-    private function _upload_gambar()
+    private function _upload_image()
     {
         $path = './uploads/artikel/';
         if (!is_dir($path)) {
@@ -80,15 +80,15 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload', $config);
 
-        if ($this->upload->do_upload('gambar')) {
+        if ($this->upload->do_upload('image')) {
             return $this->upload->data("file_name");
         }
         
-        return NULL;
+        return NULL; // Default to null or handle error
     }
 
-    public function hapus($id) {
-        $this->Artikel_model->hapus($id);
+    public function delete($id) {
+        $this->Artikel_model->delete($id);
         redirect('admin');
     }
 }

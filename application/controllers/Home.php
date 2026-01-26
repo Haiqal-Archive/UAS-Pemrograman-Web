@@ -14,7 +14,7 @@ class Home extends CI_Controller {
     public function index()
     {
         $data['title'] = 'Home - RustHub Docs';
-        $data['articles'] = $this->Artikel_model->get_all_artikel();
+        $data['articles'] = $this->Artikel_model->get_all();
         
         $this->load->view('layout/header', $data);
         $this->load->view('layout/navbar');
@@ -28,18 +28,18 @@ class Home extends CI_Controller {
             redirect('home');
         }
 
-        $data['artikel'] = $this->Artikel_model->get_artikel_by_slug($slug);
+        $data['article'] = $this->Artikel_model->get_by_slug($slug);
         
-        if (empty($data['artikel'])) {
+        if (empty($data['article'])) {
             show_404();
         }
 
         // Parse Markdown-style code blocks
-        $data['artikel']['konten'] = $this->_parse_content($data['artikel']['konten']);
+        $data['article']['konten'] = $this->_parse_content($data['article']['konten']);
 
         // Pass articles for potential sidebar usage or next/prev (even if view doesn't use it yet)
-        $data['articles'] = $this->Artikel_model->get_all_artikel();
-        $data['title'] = $data['artikel']['judul'] . ' - RustHub Docs';
+        $data['articles'] = $this->Artikel_model->get_all();
+        $data['title'] = $data['article']['judul'] . ' - RustHub Docs';
 
         $this->load->view('layout/header', $data);
         $this->load->view('layout/navbar');

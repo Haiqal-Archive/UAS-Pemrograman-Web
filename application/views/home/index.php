@@ -3,7 +3,7 @@
         <!-- Sidebar Navigation -->
         <div class="col-lg-3 col-md-4 mb-4">
             <div class="card shadow-sm position-sticky" style="top: 80px;">
-                <div class="card-header text-uppercase text-muted fw-bold space-1">
+                <div class="card-header text-uppercase text-light fw-bold space-1">
                     Docs & Modules
                 </div>
                 <div class="card-body p-2">
@@ -12,7 +12,7 @@
                         
                         <?php if(!empty($articles)): ?>
                             <?php foreach($articles as $a): ?>
-                                <a class="sidebar-link" href="<?= base_url('artikel/'.$a['slug']) ?>">
+                                <a class="sidebar-link" href="<?= base_url('article/'.$a['slug']) ?>">
                                     <?= html_escape($a['judul']) ?>
                                 </a>
                             <?php endforeach; ?>
@@ -49,7 +49,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title text-white">
-                                <a href="<?= base_url('artikel/'.$a['slug']) ?>" class="text-white text-decoration-none">
+                                <a href="<?= base_url('article/'.$a['slug']) ?>" class="text-white text-decoration-none">
                                     <?= html_escape($a['judul']) ?>
                                 </a>
                             </h5>
@@ -59,7 +59,7 @@
                             <p class="card-text text-secondary">
                                 <?= word_limiter(strip_tags($a['konten']), 20) ?>
                             </p>
-                            <a href="<?= base_url('artikel/'.$a['slug']) ?>" class="btn btn-sm btn-outline-info stretched-link">Read Docs</a>
+                            <a href="<?= base_url('article/'.$a['slug']) ?>" class="btn btn-sm btn-outline-info stretched-link">Read Docs</a>
                         </div>
                     </div>
                 </div>

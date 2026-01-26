@@ -1,15 +1,10 @@
 <?php
 class Artikel_model extends CI_Model {
-    public function get_semua() {
+    public function get_all() {
         return $this->db->get('artikel')->result_array();
     }
 
-    // Alias for frontend consistency
-    public function get_all_artikel() {
-        return $this->get_semua();
-    }
-
-    public function get_artikel_by_slug($slug) {
+    public function get_by_slug($slug) {
         return $this->db->get_where('artikel', ['slug' => $slug])->row_array();
     }
 
@@ -17,7 +12,7 @@ class Artikel_model extends CI_Model {
         return $this->db->get_where('artikel', ['id' => $id])->row_array();
     }
 
-    public function simpan($data) {
+    public function insert($data) {
         return $this->db->insert('artikel', $data);
     }
 
@@ -26,7 +21,7 @@ class Artikel_model extends CI_Model {
         return $this->db->update('artikel', $data);
     }
 
-    public function hapus($id) {
+    public function delete($id) {
         $this->db->where('id', $id);
         return $this->db->delete('artikel');
     }

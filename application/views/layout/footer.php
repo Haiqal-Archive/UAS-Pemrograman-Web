@@ -1,5 +1,5 @@
 <footer class="py-4 mt-5 border-top border-secondary">
-    <div class="container text-center text-muted small">
+    <div class="container text-center text-white-50 small">
         <p class="mb-1">
             &copy; <?= date('Y') ?> RustHub. Not affiliated with the Rust Foundation.
         </p>

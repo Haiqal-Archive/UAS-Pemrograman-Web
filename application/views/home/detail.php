@@ -3,7 +3,7 @@
         <!-- Sidebar Navigation (Same as Home for consistency) -->
         <div class="col-lg-3 col-md-4 mb-4 d-none d-md-block">
             <div class="card shadow-sm position-sticky" style="top: 80px;">
-                <div class="card-header text-uppercase text-muted fw-bold space-1">
+                <div class="card-header text-uppercase text-light fw-bold space-1">
                     Navigation
                 </div>
                 <div class="card-body p-2">
@@ -19,27 +19,27 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background: transparent; padding: 0;">
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>">Docs</a></li>
-                    <li class="breadcrumb-item active text-secondary" aria-current="page"><?= html_escape($artikel['judul']) ?></li>
+                    <li class="breadcrumb-item active text-secondary" aria-current="page"><?= html_escape($article['judul']) ?></li>
                 </ol>
             </nav>
 
-            <h1 class="display-4 fw-bold mb-4 text-white"><?= html_escape($artikel['judul']) ?></h1>
+            <h1 class="display-4 fw-bold mb-4 text-white"><?= html_escape($article['judul']) ?></h1>
             
-            <?php if(!empty($artikel['gambar']) && $artikel['gambar'] !== 'default.jpg'): ?>
+            <?php if(!empty($article['gambar']) && $article['gambar'] !== 'default.jpg'): ?>
                 <div class="mb-4 text-center p-3" style="background:#2d333b; border-radius:8px;">
-                    <img src="<?= base_url('uploads/artikel/'.$artikel['gambar']) ?>" class="img-fluid rounded" style="max-height: 400px;" alt="Doc Image">
+                    <img src="<?= base_url('uploads/articles/'.$article['gambar']) ?>" class="img-fluid rounded" style="max-height: 400px;" alt="Doc Image">
                 </div>
             <?php endif; ?>
 
             <div class="card p-4 shadow-sm" style="background-color: #1f2428; border: none;">
                 <!-- Main Content with styling for Code blocks -->
                 <article class="article-content" style="color: #e1e4e8;">
-                    <?= $artikel['konten'] ?> 
+                    <?= $article['konten'] ?> 
                 </article>
             </div>
 
             <div class="mt-5 pt-3 border-top border-secondary text-muted d-flex justify-content-between">
-                <span>Last commit: <?= date('M d, Y', strtotime($artikel['tanggal_dibuat'] ?? 'now')) ?></span>
+                <span>Last commit: <?= date('M d, Y', strtotime($article['tanggal_dibuat'] ?? 'now')) ?></span>
                 <a href="#" class="text-secondary">Edit this page on GitHub</a>
             </div>
         </div>
