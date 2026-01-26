@@ -21,9 +21,9 @@
                         <?php endif; ?>
 
                         <div class="border-top border-secondary my-2"></div>
-                        <a class="sidebar-link text-muted small" href="#">Crate: serde</a>
-                        <a class="sidebar-link text-muted small" href="#">Crate: tokio</a>
-                        <a class="sidebar-link text-muted small" href="#">Crate: actix-web</a>
+                        <a class="sidebar-link text-white-50 small" href="#">Crate: serde</a>
+                        <a class="sidebar-link text-white-50 small" href="#">Crate: tokio</a>
+                        <a class="sidebar-link text-white-50 small" href="#">Crate: actix-web</a>
                     </nav>
                 </div>
             </div>
@@ -32,12 +32,12 @@
         <!-- Main Documentation Content -->
         <div class="col-lg-9 col-md-8">
             <div class="p-5 rounded-3 mb-4" style="background: linear-gradient(145deg, #2d333b 0%, #1f2428 100%); border: 1px solid #444c56;">
-                <h1 class="display-5 fw-bold mb-3">Welcome to RustHub</h1>
+                <h1 class="display-5 fw-bold mb-3">Welcome to Rust<span style="color: var(--rust-accent);">Hub</span></h1>
                 <p class="lead text-secondary">The unofficial, community-driven documentation hub for the Rust programming language. Learn ownership, borrowing, and lifetimes with specific examples.</p>
                 <hr class="border-secondary my-4">
                 <div class="d-flex gap-3">
-                    <a href="#" class="btn btn-rust btn-lg">Install Rust</a>
-                    <a href="#" class="btn btn-outline-light btn-lg">Read the Book</a>
+                    <a href="article/getting-started-with-rust" class="btn btn-rust btn-lg">Install Rust</a>
+                    <a href="https://doc.rust-lang.org/book/" class="btn btn-outline-light btn-lg">Read the Book</a>
                 </div>
             </div>
             
