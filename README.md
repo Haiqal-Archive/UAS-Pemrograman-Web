@@ -12,9 +12,10 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 ## Fitur
 
 ### 1. Developer-Centric Frontend
-- **Tema Gelap (Rust/VSCode Style):** Desain UI menggunakan palet warna `Charcoal` & `Rust Orange` agar nyaman dibaca developer.
-- **Syntax Highlighting:** Integrasi **Prism.js** untuk mempercantik kode snippet pada artikel.
+- **Tema Gelap (Rust Style):** Desain UI menggunakan palet warna `Charcoal` & `Rust Orange` agar nyaman dibaca developer.
+- **Syntax Highlighting:** Integrasi `Prism.js` untuk mempercantik kode snippet pada artikel.
 - **Font Coding:** Menggunakan font `Fira Code` untuk memberikan nuansa "IDE" di web.
+- **Markdown:** Menggunakan library `Parsedown` untuk memberikan dukungan Markdown > HTML.
 
 ### 2. Autentikasi & Keamanan
 - Login Admin dengan *Bcrypt Hashing*.
@@ -34,7 +35,7 @@ Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrogram
 
 ## Stack Teknologi
 
-- **Backend:** PHP 8.0 + CodeIgniter 3 (HMVC structure ready)
+- **Backend:** PHP 8.0 + CodeIgniter 3
 - **Frontend:** Bootstrap 5 + Custom CSS (Rust Theme) + Prism.js
 - **Database:** MariaDB 10.6
 - **Infrastructure:** Docker & Docker Compose
@@ -113,6 +114,5 @@ curl "http://localhost:8080/index.php/migrate"
 
 ---
 **Nama Mahasiswa:** Haiqal Alyhazamy<br>
-**NIM:** 2410050<br>
 **Mata Kuliah:** Pemrograman Web<br>
 **Prodi:** TI Semester 3

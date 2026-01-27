@@ -48,40 +48,34 @@ class Home extends CI_Controller {
     }
 
     /**
-     * Simple parser for Markdown Code Fences
-     * Wraps ```rust ... ``` in <pre><code class="language-rust">...</code></pre>
+     * Parse Markdown content with syntax highlighting support
+     * Uses Parsedown for standard Markdown, then enhances code blocks for Prism.js
      */
     private function _parse_content($text)
     {
-        // Split by code blocks
-        $parts = preg_split('/(```[\s\S]*?```)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+        // Load Parsedown library
+        require_once FCPATH . 'vendor/autoload.php';
+        $parsedown = new Parsedown();
         
-        $output = '';
-        foreach ($parts as $part) {
-            if (preg_match('/^```/', $part)) {
-                // Code block found
-                $lines = explode("\n", $part);
-                
-                // Get language (e.g., ```rust)
-                $first_line = trim($lines[0]); 
-                $language = str_replace('```', '', $first_line);
-                if (empty($language)) $language = 'text'; // Default to text/none
-
-                // Remove first line (```lang) and last line (```)
-                array_shift($lines);
-                if (trim(end($lines)) === '```') array_pop($lines);
-                
-                $code = implode("\n", $lines);
-                
-                // Escape code content but wrap in pre/code tags
-                $output .= '<pre><code class="language-' . html_escape($language) . '">' . html_escape($code) . '</code></pre>';
-            } else {
-                // Regular Text
-                // Escape HTML and convert newlines
-                $output .= nl2br(html_escape($part));
-            }
-        }
+        // Convert Markdown to HTML
+        $html = $parsedown->text($text);
         
-        return $output;
+        // Enhance code blocks for Prism.js syntax highlighting
+        // Parsedown creates: <code class="language-rust">...</code>
+        // Prism.js needs: <pre><code class="language-rust">...</code></pre>
+        // We need to ensure proper wrapping and class names
+        
+        // Replace fenced code blocks with Prism-compatible format
+        $html = preg_replace_callback(
+            '/<code class="language-(\w+)">(.*?)<\/code>/s',
+            function($matches) {
+                $language = $matches[1];
+                $code = $matches[2];
+                return '<code class="language-' . $language . '">' . $code . '</code>';
+            },
+            $html
+        );
+        
+        return $html;
     }
 }
