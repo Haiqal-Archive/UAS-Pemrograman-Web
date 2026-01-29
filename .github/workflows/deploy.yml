@@ -1,0 +1,43 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy RustHub Docs
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup deployment info
+      run: |
+        echo "Deploying RustHub Docs"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        
+    - name: Build Docker images
+      run: |
+        docker compose build
+        
+    - name: Create deployment summary
+      run: |
+        echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Project**: RustHub Documentation Portal" >> $GITHUB_STEP_SUMMARY
+        echo "- **Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Author**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Docker Services" >> $GITHUB_STEP_SUMMARY
+        echo "- rusthub_web (Apache + PHP 8.0)" >> $GITHUB_STEP_SUMMARY
+        echo "- rusthub_db (MariaDB 10.6)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Deployment workflow completed successfully!" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,97 @@
+name: CI - Code Quality & Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  php-lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+        extensions: mysqli, gd
+        
+    - name: Check PHP syntax errors
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -not -path "./system/*" -exec php -l {} \; | grep -v "No syntax errors"
+        if [ $? -eq 0 ]; then
+          echo "No PHP syntax errors found"
+        else
+          echo "PHP syntax errors detected"
+          exit 1
+        fi
+
+  docker-build:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Docker image
+      run: |
+        docker compose build
+        
+    - name: Test Docker containers
+      run: |
+        docker compose up -d
+        sleep 10
+        docker compose ps
+        curl -f http://localhost:8080 || exit 1
+        docker compose down
+
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check file permissions
+      run: |
+        echo "Checking for files with suspicious permissions..."
+        find . -type f -perm /111 -name "*.php" -not -path "./vendor/*" | grep . && exit 1 || echo "No executable PHP files found"
+        
+    - name: Check for hardcoded credentials
+      run: |
+        echo "Scanning for potential hardcoded credentials..."
+        ! grep -r -i "password.*=.*['\"][^'\"]\{3,\}" --include="*.php" --exclude-dir={vendor,system} . || (echo "Warning: Potential hardcoded credentials found" && exit 1)
+        
+    - name: Check directory structure
+      run: |
+        echo "Validating CodeIgniter directory structure..."
+        test -d application && test -d system && test -f index.php || (echo "Invalid CI3 structure" && exit 1)
+        echo "Directory structure valid"
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'table'
+        exit-code: '0'
+        ignore-unfixed: true
+        severity: 'CRITICAL,HIGH'
