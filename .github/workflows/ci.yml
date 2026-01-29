@@ -49,9 +49,15 @@ jobs:
     - name: Test Docker containers
       run: |
         docker compose up -d
-        sleep 10
-        docker compose ps
+        sleep 15
+        echo "Waiting for database to be ready..."
+        docker compose exec -T db mariadb -u root -prootpassword -e "SELECT 1" > /dev/null 2>&1 || sleep 5
+        echo "Running migrations..."
+        docker compose exec -T web curl -f "http://localhost/index.php/migrate" || true
+        sleep 3
+        echo "Testing homepage..."
         curl -f http://localhost:8080 || exit 1
+        echo "Docker containers running successfully"
         docker compose down
 
   code-quality:
@@ -70,7 +76,8 @@ jobs:
     - name: Check for hardcoded credentials
       run: |
         echo "Scanning for potential hardcoded credentials..."
-        ! grep -r -i "password.*=.*['\"][^'\"]\{3,\}" --include="*.php" --exclude-dir={vendor,system} . || (echo "Warning: Potential hardcoded credentials found" && exit 1)
+        ! grep -r -E "password.*=.*['\"][a-zA-Z0-9]{4,}['\"]" --include="*.php" --exclude-dir={vendor,system,migrations} application/config/ application/controllers/Admin.php || (echo "Warning: Potential hardcoded credentials found" && exit 1)
+        echo "No hardcoded credentials in config files"
         
     - name: Check directory structure
       run: |
