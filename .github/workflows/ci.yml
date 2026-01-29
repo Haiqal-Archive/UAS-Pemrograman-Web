@@ -23,11 +23,15 @@ jobs:
         
     - name: Check PHP syntax errors
       run: |
-        find . -name "*.php" -not -path "./vendor/*" -not -path "./system/*" -exec php -l {} \; | grep -v "No syntax errors"
-        if [ $? -eq 0 ]; then
+        echo "Checking PHP syntax..."
+        ERROR_COUNT=0
+        for file in $(find . -name "*.php" -not -path "./vendor/*" -not -path "./system/*"); do
+          php -l "$file" > /dev/null 2>&1 || { echo "Syntax error in $file"; ERROR_COUNT=$((ERROR_COUNT+1)); }
+        done
+        if [ $ERROR_COUNT -eq 0 ]; then
           echo "No PHP syntax errors found"
         else
-          echo "PHP syntax errors detected"
+          echo "Found $ERROR_COUNT PHP syntax errors"
           exit 1
         fi
 
