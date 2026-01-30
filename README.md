@@ -5,7 +5,8 @@
 **RustHub Docs** adalah portal dokumentasi berbasis komunitas yang dibangun menggunakan **CodeIgniter 3**.
 Berbeda dengan blog konvensional, proyek ini dirancang dengan tema gelap yang ramah bagi developer, lengkap dengan *syntax highlighting*, struktur sidebar dokumentasi, dan integrasi tipografi ala "Code Editor".
 
-Dibuat untuk memenuhi tugas **Ujian Akhir Semester (UAS)** mata kuliah Pemrograman Web.
+![RustHub Home](docs/home.png)
+> *Lihat screenshot lainnya di folder [docs](docs/).*
 
 ---
 
@@ -103,6 +104,16 @@ services:
   web:
     ports:
       - "8081:80"  # Ganti 8080 ke port lain
+```
+
+### Restart Docker Environment
+Jika mengalami masalah koneksi atau error yang tidak jelas, coba restart container untuk memastikan *fresh start*:
+```bash
+# Hentikan semua container
+docker compose down
+
+# Jalankan kembali
+docker compose up -d
 ```
 
 ### Database Reset
